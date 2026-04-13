@@ -1,6 +1,0 @@
-{
-  "Platform": "TryHackMe",
-  "TargetName": "Pickle Rick",
-  "Difficulty": "Easy",
-  "Description": "A Rick and Morty themed web exploitation challenge where you bypass command execution filters to find all the ingredients to turn Rick back into a human."
-}
