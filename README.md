@@ -1,28 +1,15 @@
-# CTF Writeups & Walkthroughs
+# 🛡️ Cybersecurity Lab Walkthroughs & Write-ups
 
-A structured collection of **Hack The Box (HTB) and TryHackMe (THM) walkthroughs and CTF writeups**.
+My personal archive of CTF challenges and lab walkthroughs! 
 
-Each room documents methodology, commands, enumeration, exploitation steps, with **flags captured and completion points tracked**.
+This repository serves as a knowledge base and study guide tracking my progression across various cybersecurity training platforms. Inside, you'll find comprehensive notes and exploitation methodologies for the environments I've compromised.
 
-A maintained **learning archive and reference** for hands-on practice and cyber security notes.
+## 🏆 Successfully Rooted Targets
 
-## Directory Structure
+Below is an index of the environments documented in this repository:
 
-* **Rooms/**
-  * **Hack the Box/**: Contains writeups for Hack The Box machines and challenges.
-  * **TryHackMe/**: Contains writeups for TryHackMe rooms.
-
-## Completed Rooms
-
-| Platform | Room Name | Difficulty | Description |
+| Platform | Target Name | Difficulty level | Overview |
 |:---:|---|:---:|---|
-| ![TryHackMe](https://img.shields.io/badge/TryHackMe-red) | [Watcher](./Rooms/TryHackMe/Watcher/writeup.md) | Medium | A boot2root Linux machine utilising web exploits along with some common privilege escalation techniques. |
+| ![TryHackMe](https://img.shields.io/badge/TryHackMe-red) | [**Watcher**](./Rooms/TryHackMe/Watcher/writeup.md) | Medium | A classic boot2root Linux scenario focusing on web exploitation flows (LFI) and chained privilege escalation techniques to gain root access. |
 
-> ## Additional Information
->
-> In addition to the walkthroughs, this repository may also include other relevant files or resources associated with each room, such as exploit scripts, log files, or nmap scans. These files can be found within the respective directories.
->
-> Please note that the walkthroughs provided here are for educational purposes only and should not be used for any malicious activities. Always adhere to ethical hacking practices and respect the terms and conditions of the platforms.
 
----
-*Maintained by Robert Gooding*
