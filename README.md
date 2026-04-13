@@ -1,6 +1,11 @@
-My personal archive of CTF challenges and lab walkthroughs! 
 
+My personal archive of CTF challenges and lab walkthroughs! 
 This repository serves as a knowledge base and study guide tracking my progression across various cybersecurity training platforms. Inside, you'll find comprehensive notes and exploitation methodologies for the environments I've compromised.
+### Profiles
+TryHackMe https://tryhackme.com/p/bobbybojanglles
+
+Hack the Box https://app.hackthebox.com/users/816258
+
 
 ## 🏆 Successfully Rooted Targets
 
