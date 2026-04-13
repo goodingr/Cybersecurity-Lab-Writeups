@@ -1,0 +1,6 @@
+{
+  "Platform": "TryHackMe",
+  "TargetName": "Opacity",
+  "Difficulty": "Easy",
+  "Description": "Exploiting an insecure file upload to grab a KeePass database and escalating privileges through cracked credentials and an insecure backup script."
+}

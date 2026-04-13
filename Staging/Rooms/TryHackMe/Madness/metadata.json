@@ -1,0 +1,6 @@
+{
+  "Platform": "TryHackMe",
+  "TargetName": "Madness",
+  "Difficulty": "Easy",
+  "Description": "An image forensics and path brute forcing challenge that leads to SSH access via ROT13, ending in a SUID privilege escalation to root."
+}
