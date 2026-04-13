@@ -7,7 +7,7 @@ TryHackMe https://tryhackme.com/p/bobbybojanglles
 Hack the Box https://app.hackthebox.com/users/816258
 
 
-## 🏆 Successfully Rooted Targets
+## Walkthroughs
 
 Below is an index of the environments documented in this repository:
 
