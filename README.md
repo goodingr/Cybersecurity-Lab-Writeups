@@ -18,3 +18,4 @@ Below is an index of the environments documented in this repository:
 
 
 
+| ![TryHackMe](https://img.shields.io/badge/TryHackMe-red) | [**LazyAdmin**](./Rooms/TryHackMe/LazyAdmin/writeup.md) | Easy | Exploiting a SweetRice CMS backup leak to crack credentials, uploading a PHP reverse shell through an ads injection vulnerability, and escalating to root via a writable Perl backup script. |
