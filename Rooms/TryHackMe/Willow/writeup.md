@@ -1,6 +1,6 @@
 # TryHackMe: Willow Writeup
 
-**Room Link:** [Willow](https://tryhackme.com/room/dvwa)
+**Room Link:** [Willow](https://tryhackme.com/room/willow)
 
 ---
 
@@ -169,4 +169,4 @@ steghide --extract -sf user.jpg
 cat root.txt
 ```
 
-**Root Flag:** `THM{find_a_red_rose_on_the_grave}`
+Root flag recovered (redacted here — solve the room to get the exact value).

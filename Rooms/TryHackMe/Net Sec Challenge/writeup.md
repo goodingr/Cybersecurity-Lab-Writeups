@@ -40,8 +40,8 @@ This reveals critical information:
 
 ```
 PORT      STATE SERVICE     VERSION
-22/tcp    open  ssh         SSH-2.0-OpenSSH_8.2p1 THM{946219583339}
-80/tcp    open  http        lighttpd THM{web_server_25352}
+22/tcp    open  ssh         SSH-2.0-OpenSSH_8.2p1 THM{redacted}
+80/tcp    open  http        lighttpd THM{redacted}
 139/tcp   open  netbios-ssn Samba smbd 4
 445/tcp   open  netbios-ssn Samba smbd 4
 8080/tcp  open  http        Node.js (Express middleware)
@@ -49,8 +49,8 @@ PORT      STATE SERVICE     VERSION
 ```
 
 Key findings from the scan:
-- **SSH server header flag:** `THM{946219583339}`
-- **HTTP server header flag:** `THM{web_server_25352}`
+- **SSH server header flag:** found in the banner (redacted — solve to get the exact value)
+- **HTTP server header flag:** found in the banner (redacted — solve to get the exact value)
 - **Hidden FTP service** on non-standard port `10021` running `vsftpd 3.0.5`
 
 ## FTP Brute Force
@@ -80,7 +80,7 @@ ftp <target-ip> -p 10021
 ftp> ls
 -rw-rw-r--    1 1002     1002           18 Sep 20  2021 ftp_flag.txt
 ftp> more ftp_flag.txt
-THM{321452667098}
+THM{redacted}
 ```
 
 ## IDS Evasion Challenge
@@ -93,7 +93,7 @@ Running a TCP Null scan:
 nmap -sN <target-ip>
 ```
 
-After the scan completes, the web page reveals the flag: `THM{f7443f99}`
+After the scan completes, the web page reveals the flag (redacted — solve to get the exact value).
 
 ## Challenge Answers
 
@@ -102,8 +102,8 @@ After the scan completes, the web page reveals the flag: `THM{f7443f99}`
 | Highest open port below 10,000? | `8080` |
 | Open port above 10,000? | `10021` |
 | How many TCP ports are open? | `6` |
-| Flag in HTTP server header? | `THM{web_server_25352}` |
-| Flag in SSH server header? | `THM{946219583339}` |
+| Flag in HTTP server header? | *(redacted)* |
+| Flag in SSH server header? | *(redacted)* |
 | FTP server version? | `vsftpd 3.0.5` |
-| Flag from FTP account? | `THM{321452667098}` |
-| Flag from the IDS challenge? | `THM{f7443f99}` |
+| Flag from FTP account? | *(redacted)* |
+| Flag from the IDS challenge? | *(redacted)* |

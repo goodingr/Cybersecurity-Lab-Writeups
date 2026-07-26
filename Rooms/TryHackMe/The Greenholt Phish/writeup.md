@@ -1,6 +1,6 @@
 # TryHackMe: The Greenholt Phish Writeup
 
-**Room Link:** [The Greenholt Phish](https://tryhackme.com/room/phishingemails5fgjlz)
+**Room Link:** [The Greenholt Phish](https://tryhackme.com/room/phishingemails5fgjlzxc)
 
 ---
 

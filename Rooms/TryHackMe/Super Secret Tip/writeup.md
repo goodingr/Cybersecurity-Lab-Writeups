@@ -1,6 +1,6 @@
 # TryHackMe: Super Secret Tip Writeup
 
-**Room Link:** Super Secret Tip
+**Room Link:** [Super Secret Tip](https://tryhackme.com/room/supersecrettip)
 
 ---
 

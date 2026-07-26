@@ -86,7 +86,7 @@ In the room's VM, we open `email2.txt` and find a Base64-encoded block. To recon
 cat email2.txt | grep -A 9999 'Content-Transfer-Encoding: base64' | base64 -d > attachment.pdf
 ```
 
-3. Open the resulting PDF to find the hidden text: **THM{BENIGN_PDF_ATTACHMENT}**.
+3. Open the resulting PDF to find hidden text serving as the room's flag (redacted here — solve the room to get the exact value).
 
 ---
 

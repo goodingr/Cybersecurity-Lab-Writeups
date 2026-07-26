@@ -103,10 +103,9 @@ We now have valid SSH credentials:
 ssh joker@10.10.54.141
 # ...
 cat user.txt
-THM{d5781e53b130efe2f94f9b0354a5e4ea}
 ```
 
-User flag acquired!
+User flag acquired! (redacted — solve the room to get the exact value)
 
 ## Privilege Escalation: joker -> root
 
@@ -135,5 +134,5 @@ Executing `41154.sh` safely escalates us to an interactive root prompt.
 ```bash
 ./41154.sh
 # cat /root/root.txt
-THM{5ecd98aa66a6abb670184d7547c8124a}
 ```
+(Root flag redacted — solve the room to get the exact value.)

@@ -122,7 +122,7 @@ ssh aubreanna@internal.thm
 cat user.txt
 ```
 
-**Flag:** `THM{int3rn4l_fl4g_1}`
+Flag obtained (redacted — solve the room to get the exact value).
 
 ## Privilege Escalation Path: aubreanna -> Jenkins
 

@@ -34,8 +34,7 @@ Allow: /flag_1.txt
 Allow: /secret_file_do_not_read.txt
 ```
 
-Retrieving `/flag_1.txt` gives us our first flag:
-`FLAG{robots_dot_text_what_is_next}`
+Retrieving `/flag_1.txt` gives us our first flag (redacted — solve the room to get the exact value).
 
 ### Local File Inclusion (LFI)
 
@@ -67,10 +66,9 @@ drwxr-xr-x    2 1001     1001         4096 Dec 03  2020 files
 -rw-r--r--    1 0        0              21 Dec 03  2020 flag_2.txt
 
 ftp> more flag_2.txt
-FLAG{ftp_you_and_me}
 ```
 
-We get the second flag.
+We get the second flag (redacted — solve the room to get the exact value).
 
 The `/files` directory is mapped to `/home/ftpuser/ftp/files`, which we can also assume is accessible and executable from the LFI vulnerability. We will upload a PHP reverse shell here.
 
@@ -102,10 +100,9 @@ Checking around the web directory (`/var/www/html/`), we find another hidden dir
 $ cd /var/www/html
 $ cd more_secrets_a9f10a
 $ cat flag_3.txt
-FLAG{lfi_what_a_guy}
 ```
 
-Flag 3 obtained!
+Flag 3 obtained! (redacted — solve the room to get the exact value)
 
 ## Privilege Escalation: www-data -> toby
 
@@ -136,10 +133,9 @@ We can run any command as `toby` without a password! Let's read `flag_4.txt` in 
 
 ```bash
 $ sudo -u toby cat /home/toby/flag_4.txt
-FLAG{chad_lifestyle}
 ```
 
-Flag 4 obtained!
+Flag 4 obtained! (redacted — solve the room to get the exact value)
 
 ## Privilege Escalation: toby -> mat
 
@@ -162,10 +158,9 @@ Start another netcat listener (`nc -lnvp 4444`) and wait a minute. We get a conn
 Let's read flag 5:
 ```bash
 mat@ip-10-201-25-197:~$ cat flag_5.txt
-FLAG{live_by_the_cow_die_by_the_cow}
 ```
 
-Flag 5 obtained!
+Flag 5 obtained! (redacted — solve the room to get the exact value)
 
 ## Privilege Escalation: mat -> will
 
@@ -224,10 +219,9 @@ Our listener catches the shell. We are now `will`.
 $ whoami
 will
 $ cat /home/will/flag_6.txt
-FLAG{but_i_thought_my_script_was_secure}
 ```
 
-Flag 6 obtained!
+Flag 6 obtained! (redacted — solve the room to get the exact value)
 
 ## Privilege Escalation: will -> root
 
@@ -259,6 +253,6 @@ We now have a root shell over SSH. Let's grab the final flag:
 
 ```bash
 root@Watcher:~# cat /root/flag_7.txt
-FLAG{who_watches_the_watchers}
 ```
+(Final root flag redacted — solve the room to get the exact value.)
 

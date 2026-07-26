@@ -75,8 +75,7 @@ It seems this was just a distraction. Let's return to the command execution port
 - `portal.php`
 
 Instead of bypassing the command line to read `.txt` files in the web root, we can just access them via the browser!
-Appending `/Sup3rS3cretPickl3Ingred.txt` to our URL reveals the **first ingredient**:
-`mr. meeseek hair`
+Appending `/Sup3rS3cretPickl3Ingred.txt` to our URL reveals the **first ingredient** (redacted — solve the room to get the exact value).
 
 Appending `/clue.txt` reveals:
 `Look around the file system for the other ingredient.`
@@ -102,7 +101,7 @@ Rick's directory contains a file called `second ingredients`. We can read it usi
 tac "/home/rick/second ingredients"
 ```
 
-**Second ingredient:** `1 jerry tear`
+**Second ingredient:** obtained (redacted — solve the room to get the exact value).
 
 To get to the final ingredient, we'll likely need root access. Let's check our `sudo` privileges:
 ```bash
@@ -119,5 +118,5 @@ We use `sudo tac` to read the final file while bypassing the `cat` restriction:
 sudo tac /root/3rd.txt
 ```
 
-**Third ingredient:** `fleeb juice`
+**Third ingredient:** obtained (redacted — solve the room to get the exact value).
 

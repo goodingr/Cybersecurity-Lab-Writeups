@@ -94,8 +94,8 @@ We can use these credentials to SSH into the machine as `sysadmin` and grab the 
 
 ```bash
 sysadmin@ip-10-201-4-147:~$ cat local.txt
-6661b61b44d234d230d06bf5b3c075e2
 ```
+(User flag redacted — solve the room to get the exact value.)
 
 ## Privilege Escalation: sysadmin -> root
 
@@ -130,5 +130,5 @@ Start another netcat listener on your machine (`nc -lvnp 1234`) and wait for the
 # whoami
 root
 # cat /root/proof.txt
-ac0d56f93202dd57dcb2498c739fd20e
 ```
+(Root flag redacted — solve the room to get the exact value.)

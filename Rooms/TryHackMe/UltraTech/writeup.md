@@ -181,4 +181,4 @@ sIOfoEC+vvs9SRxy8yNBQ2bx2kLYqoZpDJOuTC4Y7VIb+3xeLjhmvtNQGofffkQA
 -----END RSA PRIVATE KEY-----
 ```
 
-The first 9 characters of the private key (`MIIEogIBA`) are the final answer for the room.
+The first 9 characters of this private key are the final answer for the room (redacted here — solve the room to get the exact value).
