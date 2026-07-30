@@ -27,3 +27,11 @@ Below is an index of the environments documented in this repository:
 | ![TryHackMe](https://img.shields.io/badge/TryHackMe-red) | [**Internal**](./Rooms/TryHackMe/Internal/writeup.md) | Hard | Cracking WordPress credentials to get a shell via the theme editor, pivoting through leaked credentials to a low-privileged user, brute forcing an internal Jenkins instance over an SSH tunnel, and gaining RCE through the Jenkins Script Console. |
 | ![TryHackMe](https://img.shields.io/badge/TryHackMe-red) | [**Cat Pictures 2**](./Rooms/TryHackMe/Cat%20Pictures%202/writeup.md) | Easy | Recovering Gitea credentials from image metadata, weaponizing an Ansible playbook triggered through an OliveTin runner for a shell as a low-privileged user, and escalating to root via the sudo Baron Samedit heap overflow (CVE-2021-3156). |
 | ![TryHackMe](https://img.shields.io/badge/TryHackMe-red) | [**Super Secret Tip**](./Rooms/TryHackMe/Super%20Secret%20Tip/writeup.md) | Medium | Leaking Flask source code to find an SSTI vulnerability, recovering an XOR-encoded debug password, spoofing an IP-based access check, achieving RCE via Jinja2 sandbox escape, and chaining a writable `.profile` with a root cron job to read protected files. |
+
+## Projects
+
+Self-directed labs outside of platform rooms — building and defending my own infrastructure rather than attacking someone else's.
+
+| Project | Overview |
+|---|---|
+| [**Home Network Honeypot & Threat Detection Lab**](./Honeypot/writeup.md) | A self-hosted T-Pot honeypot on an isolated VLAN, capturing and analyzing live internet-wide scanning and exploitation attempts (Mirai/Prometei infections, DoublePulsar, Apache ActiveMQ RCE, SIP toll-fraud dialers, a current Next.js RCE), enriched with SpiderFoot OSINT and correlated through a custom Wazuh SIEM ruleset. |
