@@ -25,6 +25,27 @@ find . -type f -iname "NTUSER.DAT" -print
 
 `./Users/vera/NTUSER.DAT` confirms a real logged-on profile for Vera. A lookup of `ProfileList` in the `SOFTWARE` hive didn't return anything useful, so profile enumeration moved on to Vera's `AppData` directly.
 
+## Recovering the Windows Password from Registry Hives
+
+With the local `SYSTEM`, `SAM`, and `SECURITY` hives extracted from the KAPE collection, `pypykatz registry` parses them offline — no live LSASS access required:
+
+```bash
+pypykatz registry Windows/System32/config/SYSTEM \
+  --sam Windows/System32/config/SAM \
+  --security Windows/System32/config/SECURITY \
+  --software Windows/System32/config/SOFTWARE \
+  -o ~/vera-registry.txt
+```
+
+Alongside the local SAM account hashes, this dumps the machine's **LSA secrets** — the registry-protected store (`HKLM\SECURITY\Policy\Secrets`) Windows uses for things like service-account credentials and autologon passwords:
+
+```text
+LSA Default Password:
+Password: minivera
+```
+
+The `DefaultPassword` LSA secret exists specifically to support Windows autologon — for the OS to log a user in automatically at boot, it has to keep that account's password recoverable, not just hashed, in a location protected only by SYSTEM-level registry access. Since offline hive extraction grants exactly that access, the password falls out directly, with no cracking required.
+
 ## Recovering the DPAPI Master Key
 
 Windows DPAPI protects secrets like saved browser passwords with a per-user master key, which is itself encrypted using a key derived from the user's logon password. Checking Vera's DPAPI directory:
@@ -46,12 +67,12 @@ pypykatz dpapi preferredkey \
 # [GUID] c90719ef-5b98-474e-b934-136d606a702a
 ```
 
-With Vera's Windows password recovered from disk, prekeys can be derived for that SID:
+With `minivera` recovered from LSA secrets, prekeys can be derived for that SID:
 
 ```bash
 pypykatz dpapi prekey password \
   "S-1-5-21-2529683458-431225740-1723070931-1000" \
-  "<recovered-password>" \
+  "minivera" \
   -o ~/vera-password-prekeys.txt
 ```
 
@@ -195,6 +216,7 @@ Extracting and inspecting the embedded image directly reveals the flag hidden in
 
 ## Key Takeaways
 
+- **Offline registry hive extraction beats live-system credential access.** Pulling `SYSTEM`/`SAM`/`SECURITY` off a disk image and parsing them with `pypykatz registry` exposes LSA secrets — including an autologon `DefaultPassword` — without ever touching a running LSASS process.
 - **Local-account DPAPI security reduces to the strength of the logon password.** No domain backup key exists for local accounts, so recovering the master key is entirely gated on recovering the password.
 - **A VeraCrypt/TrueCrypt container with no extension is intentional, not an oversight.** `file` reporting `data` is expected — the format is designed to be indistinguishable from random noise without the key.
 - **`pdftotext` returning nothing is a signal, not a dead end.** Rasterized/scanned content defeats naive text search; `pdfimages -list` is the next step.
