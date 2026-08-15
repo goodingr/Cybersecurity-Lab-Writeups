@@ -21,6 +21,32 @@
   display: table;
 }
 
+/* Slate frames every img (border + padding + shadow), which looks wrong on the
+   inline platform badges. */
+#main_content table img {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  max-width: none;
+}
+
+/* Long descriptions read better against a top-aligned first column, and the
+   short headers should not wrap ("Difficulty level" was breaking in two). */
+#main_content th {
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+#main_content td {
+  vertical-align: top;
+}
+
+/* Faint banding so a 17-row index stays trackable across the width. */
+#main_content tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
 @media (max-width: 720px) {
   #main_content table {
     display: block;
