@@ -1,6 +1,6 @@
 title: Cybersecurity Lab Writeups
 description: CTF challenge and lab walkthroughs across TryHackMe, Hack The Box, and self-directed security projects.
-theme: jekyll-theme-primer
+theme: jekyll-theme-slate
 
 plugins:
   - jekyll-sitemap
