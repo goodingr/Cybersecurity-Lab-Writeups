@@ -1,0 +1,23 @@
+---
+layout: default
+---
+
+<nav class="writeup-nav">
+  <a href="{{ '/' | relative_url }}">&larr; All writeups</a>
+</nav>
+
+{{ content }}
+
+{% assign writeups = site.pages | where_exp: "p", "p.url contains 'writeup'" | sort: "title" %}
+{% if writeups.size > 1 %}
+<nav class="writeup-more">
+  <h2>Other writeups</h2>
+  <ul>
+    {% for p in writeups %}
+      {% unless p.url == page.url %}
+      <li><a href="{{ p.url | relative_url }}">{{ p.title | default: p.name }}</a></li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+</nav>
+{% endif %}

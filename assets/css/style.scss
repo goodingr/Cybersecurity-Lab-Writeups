@@ -1,0 +1,89 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* Slate paints .highlight #f8f8f8 but pre/code #fff, so a pre's padding shows
+   the wrapper colour as a band around the code. Unify the two and let the
+   outer wrapper carry the border. */
+
+.highlighter-rouge {
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.highlighter-rouge .highlight,
+div.highlight,
+pre,
+pre.highlight {
+  background-color: #f7f7f7;
+}
+
+.highlighter-rouge .highlight {
+  margin: 0;
+}
+
+pre,
+pre.highlight {
+  box-shadow: none;
+  border-radius: 0;
+  padding: 12px 14px;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+/* Inline code: flat, no drop shadow, distinct from block code. */
+code {
+  background-color: #eeeeee;
+  box-shadow: none;
+  padding: 2px 5px;
+  margin: 0 1px;
+}
+
+/* Navigation added by the writeup layout. */
+.writeup-nav {
+  margin-bottom: 24px;
+  font-size: 0.9em;
+}
+
+.writeup-nav a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.writeup-more {
+  margin-top: 40px;
+  padding-top: 8px;
+  border-top: 1px solid #dcdcdc;
+}
+
+.writeup-more h2 {
+  font-size: 1.05em;
+  margin-bottom: 10px;
+}
+
+.writeup-more ul {
+  list-style: none;
+  padding-left: 0;
+  columns: 2;
+  column-gap: 28px;
+}
+
+.writeup-more li {
+  margin-bottom: 6px;
+  break-inside: avoid;
+}
+
+@media (max-width: 640px) {
+  .writeup-more ul {
+    columns: 1;
+  }
+}

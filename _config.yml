@@ -10,6 +10,15 @@ defaults:
       path: ""
     values:
       layout: default
+  # Writeups get the nav wrapper; the index keeps the plain theme layout.
+  - scope:
+      path: "Rooms"
+    values:
+      layout: writeup
+  - scope:
+      path: "Honeypot"
+    values:
+      layout: writeup
 
 exclude:
   - LICENSE
