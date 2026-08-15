@@ -3,6 +3,31 @@
 
 @import "{{ site.theme }}";
 
+/* Slate caps every wrapper at 640px. That squeezes the 4-column index table
+   (the Overview column lands at ~310px, so rows grow to ~220px tall) and
+   forces horizontal scrollbars on code blocks. Widen all three together so
+   the header, content and footer stay aligned. */
+
+#header_wrap .inner,
+#main_content,
+#footer_wrap .inner {
+  max-width: 980px;
+}
+
+/* The index tables carry long prose; give them the full column and keep them
+   scrollable rather than overflowing the page on small screens. */
+#main_content table {
+  width: 100%;
+  display: table;
+}
+
+@media (max-width: 720px) {
+  #main_content table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
 /* Slate paints .highlight #f8f8f8 but pre/code #fff, so a pre's padding shows
    the wrapper colour as a band around the code. Unify the two and let the
    outer wrapper carry the border. */
